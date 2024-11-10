@@ -3,6 +3,8 @@
  * Date: 8/14/24
  * File: index.js
  * Description: Apre agent performance API for the agent performance reports
+ *
+ * 11/10/2024 Feat(): Added agent performance by Month API. (Bernice Templeman)
  */
 
 "use strict";
@@ -122,6 +124,7 @@ router.get("/call-duration-by-month", (req, res, next) => {
       return next(createError(400, "Month and year are required"));
     }
 
+    // subtract 1 for month
     month = month - 1;
     let startDate = new Date(year, month, 1);
     let endDate = new Date(year, month + 1, 0);

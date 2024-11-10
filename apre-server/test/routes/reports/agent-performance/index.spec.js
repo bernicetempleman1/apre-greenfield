@@ -11,7 +11,6 @@ const app = require('../../../../src/app');
 
 const { mongo } = require('../../../../src/utils/mongo');
 
-
 jest.mock('../../../../src/utils/mongo');
 
 // Test the agent performance API
@@ -76,7 +75,7 @@ describe('Apre Agent Performance API', () => {
   });
 });
 
-// Test the agent performance API
+// Test the agent performance by month API
 describe('Apre Agent Performance by Month API', () => {
   beforeEach(() => {
     mongo.mockClear();

@@ -69,18 +69,15 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
   `,
 })
 export class CallDurationByMonthComponent {
-  startDate: Date | null = null;
-  endDate: Date | null = null;
   callDurationData: number[] = []; // Initially empty
-  agents: string[] = []; // Initially empty
-  showChart: boolean = false; // Initially hidden
-  agentPerformanceData: any[] = [];
-  agentNames: string[] = [];
+  agentPerformanceData: any[] = []; // Initially empty
+  agentNames: string[] = []; // Initially empty
 
-  months: any[] = [];
-  years: any[] = [];
+  months: any[] = []; // Initially empty
+  years: any[] = []; // Initially empty
   errorMessage: string;
 
+  // validate month and year
   monthForm = this.fb.group({
     month: [null, Validators.compose([Validators.required])],
     year: [null, Validators.compose([Validators.required])],
@@ -114,10 +111,7 @@ export class CallDurationByMonthComponent {
   }
 
   loadYears() {
-    return [
-      { value: 2023, name: '2023' },
-      { value: 2024, name: '2024' }
-    ];
+    return [{ value: 2023, name: '2023' }];
   }
 
   onSubmit() {
@@ -138,10 +132,11 @@ export class CallDurationByMonthComponent {
       .subscribe({
         next: (data: any) => {
           if (data.length === 0) {
-            const selectedMonth = this.months.find(m => m.value === Number(month));
+            const selectedMonth = this.months.find(
+              (m) => m.value === Number(month)
+            );
             console.error('No data found for', selectedMonth.name);
-            this.errorMessage = `No data found for ${selectedMonth.name}`
-            this.showChart = false;
+            this.errorMessage = `No data found for ${selectedMonth.name}`;
             return;
           }
           this.errorMessage = ``;
