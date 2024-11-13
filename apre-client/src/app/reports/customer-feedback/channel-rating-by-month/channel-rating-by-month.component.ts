@@ -36,7 +36,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
         <div class="card chart-card">
           <app-chart
             [type]="'bar'"
-            [label]="'Sales by Region'"
+            [label]="'Channel Rating by Month'"
             [data]="ratingAvg"
             [labels]="channels">
           </app-chart>

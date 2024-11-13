@@ -76,3 +76,165 @@ describe('Apre Customer Feedback API', () => {
     });
   });
 });
+
+//********************************* */ Test the customer feedback for region API
+describe('Apre Customer Feedback API', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test the channel-rating-by-region endpoint
+
+  it('should fetch average customer feedback ratings by channel for a specified region', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              channels: ['Email', 'Phone'],
+              ratingAvg: [4.5, 3.8]
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+    const response = await request(app).get('/api/reports/customer-feedback/regions/Asia'); // Send a GET request to the channel-rating-by-month endpoint
+
+    // Expect a 200 status code
+    expect(response.status).toBe(200);
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        channels: ['Email', 'Phone'],
+        ratingAvg: [4.5, 3.8]
+      }
+    ]);
+  });
+
+
+  // Test the channel-rating-by-region endpoint with an invalid region
+  it('should return 404 for an invalid endpoint', async () => {
+    // Send a GET request to an invalid endpoint
+    const response = await request(app).get('/api/reports/customer-feedback/channel-rating-by-region/invalid-endpoint');
+    expect(response.status).toBe(404); // Expect a 404 status code
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+});
+
+// Test the sales report API
+describe('Apre Sales Report API - Regions', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test the sales/regions endpoint
+  it('should fetch a list of distinct regions', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        distinct: jest.fn().mockResolvedValue(['North', 'South', 'East', 'West'])
+      };
+      await callback(db);
+    });
+
+    const response = await request(app).get('/api/reports/customer-feedback/regions'); // Send a GET request to the sales/regions endpoint
+
+    expect(response.status).toBe(200); // Expect a 200 status code
+    expect(response.body).toEqual(['North', 'South', 'East', 'West']); // Expect the response body to match the expected data
+  });
+
+  // Test the sales/regions endpoint with no regions found
+  it('should return 404 for an invalid endpoint', async () => {
+    const response = await request(app).get('/api/reports/customer-feedback/invalid-endpoint'); // Send a GET request to an invalid endpoint
+    expect(response.status).toBe(404); // Expect a 404 status code
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+
+
+});
+
+// Test the report for region API
+describe('Apre Sales Report API - Channel Rating by Region', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test the sales/regions/:region endpoint
+  it('should fetch data for a specific region', async () => {
+    mongo.mockImplementation(async (callback) => {
+      // Mock the MongoDB collection
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              channels: ['Email', 'Phone'],
+              ratingAvg: [4.5, 3.8]
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+    const response = await request(app).get('/api/reports/sales/regions/north'); // Send a GET request to the sales/regions/:region endpoint
+    expect(response.status).toBe(200); // Expect a 200 status code
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        channels: ['Email', 'Phone'],
+        ratingAvg: [4.5, 3.8]
+      }
+    ]);
+  });
+
+  it('should return 200 and an empty array if no data is found for the region', async () => {
+    // Mock the MongoDB implementation
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([])
+        })
+      };
+      await callback(db);
+    });
+
+    // Make a request to the endpoint
+    const response = await request(app).get('/api/reports/customer-feedback/regions/unknown-region');
+
+    // Assert the response
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([]);
+  });
+
+  it('should return 404 for an invalid endpoint', async () => {
+    // Make a request to an invalid endpoint
+    const response = await request(app).get('/api/reports/customer-feedback/invalid-endpoint');
+
+    // Assert the response
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+});
