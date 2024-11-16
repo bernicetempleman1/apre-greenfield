@@ -77,14 +77,13 @@ describe('Apre Customer Feedback API', () => {
   });
 });
 
-//********************************* */ Test the customer feedback for region API
+//Test the customer feedback for region API
 describe('Apre Customer Feedback API', () => {
   beforeEach(() => {
     mongo.mockClear();
   });
 
   // Test the channel-rating-by-region endpoint
-
   it('should fetch average customer feedback ratings by channel for a specified region', async () => {
     mongo.mockImplementation(async (callback) => {
       const db = {
@@ -131,13 +130,13 @@ describe('Apre Customer Feedback API', () => {
   });
 });
 
-// Test the sales report API
-describe('Apre Sales Report API - Regions', () => {
+// Test the customer-feedback regions report API
+describe('Apre Customer Feedback Report API - Regions', () => {
   beforeEach(() => {
     mongo.mockClear();
   });
 
-  // Test the sales/regions endpoint
+  // Test the customer-feedback/regions endpoint
   it('should fetch a list of distinct regions', async () => {
     mongo.mockImplementation(async (callback) => {
       const db = {
@@ -146,18 +145,15 @@ describe('Apre Sales Report API - Regions', () => {
       };
       await callback(db);
     });
-
-    const response = await request(app).get('/api/reports/customer-feedback/regions'); // Send a GET request to the sales/regions endpoint
-
+    const response = await request(app).get('/api/reports/customer-feedback/regions'); // Send a GET request to the customer-feedback/regions endpoint
     expect(response.status).toBe(200); // Expect a 200 status code
     expect(response.body).toEqual(['North', 'South', 'East', 'West']); // Expect the response body to match the expected data
   });
 
-  // Test the sales/regions endpoint with no regions found
+  // Test the customer-feedback/regions endpoint with no regions found
   it('should return 404 for an invalid endpoint', async () => {
     const response = await request(app).get('/api/reports/customer-feedback/invalid-endpoint'); // Send a GET request to an invalid endpoint
     expect(response.status).toBe(404); // Expect a 404 status code
-
     // Expect the response body to match the expected data
     expect(response.body).toEqual({
       message: 'Not Found',
@@ -165,12 +161,10 @@ describe('Apre Sales Report API - Regions', () => {
       type: 'error'
     });
   });
-
-
 });
 
-// Test the report for region API
-describe('Apre Sales Report API - Channel Rating by Region', () => {
+// Test the report for customer feedback region API
+describe('Apre Customer-feedback Report API - Channel Rating by Region', () => {
   beforeEach(() => {
     mongo.mockClear();
   });

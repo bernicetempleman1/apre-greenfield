@@ -139,8 +139,6 @@ router.get('/regions/:region', (req, res, next) => {
             ratingAvg: { $avg: '$rating'}
           }
         },
-     
-
         {
           $group: {
             _id: '$_id.channel',
@@ -168,8 +166,6 @@ router.get('/regions/:region', (req, res, next) => {
             ratingAvg: 1
           }
         }
-
-
       ]).toArray();
       res.send(data);
     }, next);
@@ -178,6 +174,5 @@ router.get('/regions/:region', (req, res, next) => {
     next(err);
   }
 });
-
 
 module.exports = router;
