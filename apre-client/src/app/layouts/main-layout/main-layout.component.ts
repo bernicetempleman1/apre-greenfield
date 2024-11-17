@@ -309,6 +309,11 @@ export class MainLayoutComponent {
     { name: 'Sales by Region - Tabular', url: '/reports/sales/sales-by-region-tabular' },
     { name: 'Sales by Year', url: '/reports/sales/sales-by-year' },
     { name: 'Sales by Year - Tabular', url: '/reports/sales/sales-by-year-tabular' },
+    { name: 'Sales by Category', url: '/reports/sales/sales-by-category'},
+    { name: 'Sales by Customer and Salesperson', url: '/reports/sales/sales-by-customer-salesperson'},
+    { name: 'Sales by Product', url: '/reports/sales/sales-by-product'},
+    { name: 'Sales by Month', url: '/reports/sales/sales-by-month' },
+    { name: 'Sales by Salesperson', url: '/reports/sales/sales-by-salesperson' },
     // Add more reports as needed
   ];
 

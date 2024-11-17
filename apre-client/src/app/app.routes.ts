@@ -27,6 +27,11 @@ import { CustomerFeedbackComponent } from './reports/customer-feedback/customer-
 import { SalesByRegionTabularComponent } from './reports/sales/sales-by-region-tabular/sales-by-region-tabular.component';
 import { SalesByYearTabularComponent } from './reports/sales/sales-by-year-tabular/sales-by-year-tabular.component';
 import { SalesByYearComponent } from './reports/sales/sales-by-year/sales-by-year.component';
+import { SalesByCategoryComponent } from './reports/sales/sales-by-category/sales-by-category.component';
+import { SalesByCustomerSalespersonComponent } from './reports/sales/sales-by-customer-salesperson/sales-by-customer-salesperson.component';
+import { SalesByProductComponent } from './reports/sales/sales-by-product/sales-by-product.component';
+import { SalesBySalespersonComponent } from './reports/sales/sales-by-salesperson/sales-by-salesperson.component';
+import { SalesByMonthComponent } from './reports/sales/sales-by-month/sales-by-month.component';
 import { CallDurationByMonthComponent } from './reports/agent-performance/call-duration-by-month/call-duration-by-month.component';
 import { ChannelRatingByRegionComponent } from './reports/customer-feedback/channel-rating-by-region/channel-rating-by-region.component';
 
@@ -60,6 +65,28 @@ export const salesReportRoutes: Routes = [
   {
     path: 'sales-by-region-tabular',
     component: SalesByRegionTabularComponent,
+  },
+  {
+    path: 'sales-by-category',
+    component: SalesByCategoryComponent
+  },
+  {
+    path: 'sales-by-customer-salesperson',
+    component: SalesByCustomerSalespersonComponent
+  },
+  //Add route to sales-by-product
+  {
+    path: 'sales-by-product',
+    component: SalesByProductComponent
+  },
+  // Added route for sales-by-salesperson component
+  {
+    path: 'sales-by-salesperson',
+    component: SalesBySalespersonComponent
+  },
+  {
+    path: 'sales-by-month',
+    component: SalesByMonthComponent
   },
   {
     path: 'sales-by-year',
