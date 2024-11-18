@@ -236,7 +236,9 @@ router.get('/agent-id', (req, res, next) => {
  *  .then(response => response.json())
  *  .then(data => console.log(data));
  */
-router.get('/agent-performance-by-customer-feedback/:agentId', (req, res, next) => {
+// Bernice updated the following line
+//router.get('/agent-performance-by-customer-feedback/:agentId', (req, res, next) => {
+router.get('/agent-id/:agentId', (req, res, next) => {
   try {
     const { agentId } = req.params;
     console.log('AgentId: ', agentId);
