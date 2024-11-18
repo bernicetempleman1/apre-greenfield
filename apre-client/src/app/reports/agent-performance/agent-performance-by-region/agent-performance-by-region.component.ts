@@ -66,7 +66,7 @@ export class AgentPerformanceByRegionComponent {
     private http: HttpClient,
     private fb: FormBuilder
   ) {
-    this.http.get(`${environment.apiBaseUrl}/reports/agent-performance/region/regions`).subscribe({ // Fetch the regions on page load
+    this.http.get(`${environment.apiBaseUrl}/reports/agent-performance/regions`).subscribe({ // Fetch the regions on page load
       next: (data: any) => {
         this.regions = data;
       },
@@ -78,7 +78,7 @@ export class AgentPerformanceByRegionComponent {
 
   onSubmit() {
     const region = this.regionForm.controls['region'].value;
-    this.http.get(`${environment.apiBaseUrl}/reports/agent-performance/region/${region}`).subscribe({
+    this.http.get(`${environment.apiBaseUrl}/reports/agent-performance/regions/${region}`).subscribe({
       next: (data: any) => {
         this.performanceDataByRegionData = data;
         console.log(this.performanceDataByRegionData);

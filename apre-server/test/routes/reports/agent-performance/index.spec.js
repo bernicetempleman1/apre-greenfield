@@ -442,3 +442,79 @@ describe('APRE Agent Performance by Metric Suite', () => {
     ]);
   });
 });
+
+/**
+ * Author: Brandon Salvemini
+ * Date: 7 November 2024
+ * File: agent-data-by-region.spec.js
+ * Description: Test the agent performance data by region API
+ */
+
+// Test the agent performance data by region API
+describe('Apre Agent Performance data by region API', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test the regions/region endpoint
+  it('should fetch a list of distinct agent performance regions', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        distinct: jest.fn().mockResolvedValue(['Africa','Asia','Australia','Europe','North America','South America'])
+      };
+      await callback(db);
+    });
+
+    const response = await request(app).get('/api/reports/agent-performance/regions'); // Send a GET request to the region/regions endpoint
+
+    expect(response.status).toBe(200); // Expect a 200 status code
+    expect(response.body).toEqual(['Africa','Asia','Australia','Europe','North America','South America']); // Expect the response body to match the expected data
+  });
+
+  /*
+  it('should return 200 and an empty array if no data is found for the region', async () => {
+    // Mock the MongoDB implementation
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([])
+        })
+      };
+      await callback(db);
+    });
+
+    // Make a request to the endpoint
+    const response = await request(app).get('/api/reports/agent-performance/regions/unknown-region');
+
+    // Assert the response
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([]);
+  });
+  */
+  // Test the customer-feedback/regions endpoint
+  it('should fetch a list of distinct regions', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        distinct: jest.fn().mockResolvedValue(['North', 'South', 'East', 'West'])
+      };
+      await callback(db);
+    });
+    const response = await request(app).get('/api/reports/customer-feedback/regions'); // Send a GET request to the customer-feedback/regions endpoint
+    expect(response.status).toBe(200); // Expect a 200 status code
+    expect(response.body).toEqual(['North', 'South', 'East', 'West']); // Expect the response body to match the expected data
+  });
+
+  it('should return 404 for an invalid endpoint', async () => {
+    const response = await request(app).get('/api/reports/agent-performance/regions/x'); // Send a GET request to an invalid endpoint
+    expect(response.status).toBe(404);
+    // Expect the response data to equal the expected data
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+});
