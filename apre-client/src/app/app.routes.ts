@@ -34,6 +34,11 @@ import { SalesBySalespersonComponent } from './reports/sales/sales-by-salesperso
 import { SalesByMonthComponent } from './reports/sales/sales-by-month/sales-by-month.component';
 import { CallDurationByMonthComponent } from './reports/agent-performance/call-duration-by-month/call-duration-by-month.component';
 import { ChannelRatingByRegionComponent } from './reports/customer-feedback/channel-rating-by-region/channel-rating-by-region.component';
+import { AgentPerformanceByCustomerFeedbackComponent } from './reports/agent-performance/agent-performance-by-customer-feedback/agent-performance-by-customer-feedback.component';
+import { AgentPerformanceBySupervisorComponent } from './reports/agent-performance/agent-performance-by-supervisor/agent-performance-by-supervisor.component';
+import { PerformanceByMetricComponent } from './reports/agent-performance/performance-by-metric/performance-by-metric.component';
+import { AgentPerformanceByRegionComponent } from './reports/agent-performance/agent-performance-by-region/agent-performance-by-region.component';
+
 
 // Export user-management routes
 export const userManagementRoutes: Routes = [
@@ -107,7 +112,24 @@ export const agentPerformanceRoutes: Routes = [
   {
     path: 'call-duration-by-month',
     component: CallDurationByMonthComponent,
-  }
+  },
+  {
+    path: 'agent-performance-by-customer-feedback',
+    component: AgentPerformanceByCustomerFeedbackComponent
+  },
+  {
+    path: 'agent-performance-by-supervisor',
+    component: AgentPerformanceBySupervisorComponent
+  },
+  {
+    path: 'performance-by-metric',
+    component: PerformanceByMetricComponent
+  },
+  {
+    path: 'agent-performance-by-region',
+    component: AgentPerformanceByRegionComponent
+  },
+
 ];
 
 // Customer feedback routes

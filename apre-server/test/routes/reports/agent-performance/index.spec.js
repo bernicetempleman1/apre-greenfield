@@ -76,6 +76,7 @@ describe('Apre Agent Performance API', () => {
 });
 
 // Test the agent performance by month API
+// Author: Bernice Templeman
 describe('Apre Agent Performance by Month API', () => {
   beforeEach(() => {
     mongo.mockClear();
@@ -134,5 +135,310 @@ describe('Apre Agent Performance by Month API', () => {
       status: 404,
       type: 'error'
     });
+  });
+});
+
+/**
+ * Author: Kylie Struhs
+ * Date: 11/09/2024
+ * File: agent-performance-by-customer-feedback.spec.js
+ * Description: Test the agent performance by customer feedback API
+ */
+
+// Test the agent performance API
+describe('Apre Agent Performance by Customer Feedback API', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test the agent-performance-by-customer-feedback endpoint
+  it('should fetch customer feedback data for agents', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              agents: ['Agent A'],
+              customerFeedback: ["helpful"]
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-feedback/1002'); // Send a GET request to the agent-performance-by-customer-feedback endpoint
+
+    expect(response.status).toBe(200); // Expect a 200 status code
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        agents: ['Agent A'],
+        customerFeedback: ["helpful"]
+      }
+    ]);
+  });
+
+  it('should return 200 and an empty array if no customer feedback data is found', async () => {
+    // Mock the MongoDB implementation
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([])
+        })
+      };
+      await callback(db);
+    });
+
+    // Make a request to the endpoint
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-feedback/:1002');
+
+    // Assert the response
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([]);
+  });
+
+  // Test the agent-performance-by-customer-feedback endpoint with an invalid endpoint
+  it('should return 404 for an invalid endpoint', async () => {
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-foodback'); // Send a GET request to an invalid endpoint
+    expect(response.status).toBe(404); // Expect a 404 status code
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+});
+
+
+// Test the agent performance API for agent performance report by supervisor.
+describe('Apre Agent Performance API - Performance By Supervisor', () => {
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+   /**
+ * Author: Diana ruiz Garcia
+ * Date: 9 November 2024
+ * File: agent-performance-by-supervisor.spec.js
+ * Description: Test the agent performance API for agent performance report by supervisor.
+ */
+  // Test the agent-performance-by-supervisor endpoint
+  it('should fetch performance data for agents with a specified supervisor', async () => {
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              agents: ['Mia Rodriguez', 'Mason Walker', 'Ava Lewis', 'Matthew Harris', 'Ethan Clark', 'Lucas Martinez'],
+              resolutionsTime: [150, 120, 100, 120, 130, 100]
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-supervisor/650c1f1e1c9d440000a1b1c4'); // Send a GET request to the agent-performance-by-supervisor endpoint
+
+    expect(response.status).toBe(200); // Expect a 200 status code
+
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        agents: ['Mia Rodriguez', 'Mason Walker', 'Ava Lewis', 'Matthew Harris', 'Ethan Clark', 'Lucas Martinez'],
+        resolutionsTime: [150, 120, 100, 120, 130, 100]
+      }
+    ]);
+  });
+
+
+  // Test the agent-performance-by-supervisor endpoint if no supervisor is found
+  it('should return 200 with an empty array if no supervisor is found', async () => {
+    // Create a mock of the request and return data
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        distinct: jest.fn().mockResolvedValue([])
+      };
+      await callback(db);
+    });
+
+    // Send a GET request to the agent-performance-by-supervisor endpoint
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-supervisor/');
+
+    // Expect the status code to be 200
+    expect(response.status).toBe(200);
+    // Expect the response to be an empty array
+    expect(response.body).toEqual([]);
+  });
+
+  // Test the agent-performance-by-supervisor endpoint with an invalid supervisor
+  it('should return 400 for an invalid endpoint', async () => {
+    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-supervisor/invalid-supervisor'); // Send a GET request to an invalid endpoint
+    expect(response.status).toBe(400); // Expect a 500 status code
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual({
+      message: 'Supervisor ID is required',
+      status: 400,
+      type: 'error'
+    });
+  });
+});
+
+/**
+ * Author: Sheldon Skaggs
+ * Date: 11/082024
+ * File: performance-by-metric.spec.js
+ * Description: Test the agent performance by metric report api
+ */
+
+
+// Test suite for the Agent Performance by Metric Report API
+describe('APRE Agent Performance by Metric Suite', () => {
+  // Clear the mock before each test
+  beforeEach(() => {
+    mongo.mockClear();
+  });
+
+  // Test accessing an invalid endpoint
+  it('should return 404 for an invalid endpoint', async () => {
+    // Send a GET request to an invalid endpoint
+    const response = await request(app).get('/api/reports/agent-performance/not-an-endpoint');
+
+    // Expect a 404 status code
+    expect(response.status).toBe(404);
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual({
+      message: 'Not Found',
+      status: 404,
+      type: 'error'
+    });
+  });
+
+  // Test the performance-by-metric endpoint for a metric that does not exist
+  it('should return a 200 status with no metric values for each agent for a metric that does not exist', async () => {
+    // Create a mock of the expected return data
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              "agentId": 1000,
+              "agentName": "Jon Anderson",
+              "metricName": "",
+              "metricValue": 0,
+            },
+            {
+              "agentId": 1002,
+              "agentName": "Rindy Ross",
+              "metricName": "",
+              "metricValue": 0,
+            },
+            {
+              "agentId": 1,
+              "agentName": "Tom Scholz",
+              "metricName": "",
+              "metricValue": 0,
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+    // Send a GET request to the reports/agent-performance/performance-by-metric/:metricName endpoint using the value of InVaLiD
+    const response = await request(app).get('/api/reports/agent-performance/performance-by-metric/InVaLiD');
+
+    // Expect the status code to be 200
+    expect(response.status).toBe(200);
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        "agentId": 1000,
+        "agentName": "Jon Anderson",
+        "metricName": "",
+        "metricValue": 0,
+      },
+      {
+        "agentId": 1002,
+        "agentName": "Rindy Ross",
+        "metricName": "",
+        "metricValue": 0,
+      },
+      {
+        "agentId": 1,
+        "agentName": "Tom Scholz",
+        "metricName": "",
+        "metricValue": 0,
+      }
+    ]);
+  });
+
+  // Test the performance-by-metric endpoint for a valid metric
+  it('should return a 200 status with metric values for each agent for a given metric', async () => {
+    // Create a mock of the expected return data
+    mongo.mockImplementation(async (callback) => {
+      const db = {
+        collection: jest.fn().mockReturnThis(),
+        aggregate: jest.fn().mockReturnValue({
+          toArray: jest.fn().mockResolvedValue([
+            {
+              "agentId": 1000,
+              "agentName": "Jon Anderson",
+              "metricName": "Customer Satisfaction",
+              "metricValue": 80,
+            },
+            {
+              "agentId": 1002,
+              "agentName": "Rindy Ross",
+              "metricName": "Customer Satisfaction",
+              "metricValue": 100,
+            },
+            {
+              "agentId": 1,
+              "agentName": "Tom Scholz",
+              "metricName": "Customer Satisfaction",
+              "metricValue": 90,
+            }
+          ])
+        })
+      };
+      await callback(db);
+    });
+
+    // Send a GET request to the reports/agent-performance/performance-by-metric/:metricName endpoint using the value of Customer Satisfaction
+    const response = await request(app).get('/api/reports/agent-performance/performance-by-metric/Customer Satisfaction');
+
+    // Expect the status code to be 200
+    expect(response.status).toBe(200);
+    // Expect the response body to match the expected data
+    expect(response.body).toEqual([
+      {
+        "agentId": 1000,
+        "agentName": "Jon Anderson",
+        "metricName": "Customer Satisfaction",
+        "metricValue": 80,
+      },
+      {
+        "agentId": 1002,
+        "agentName": "Rindy Ross",
+        "metricName": "Customer Satisfaction",
+        "metricValue": 100,
+      },
+      {
+        "agentId": 1,
+        "agentName": "Tom Scholz",
+        "metricName": "Customer Satisfaction",
+        "metricValue": 90,
+      }
+    ]);
   });
 });
