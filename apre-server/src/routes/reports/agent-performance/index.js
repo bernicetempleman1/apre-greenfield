@@ -225,67 +225,6 @@ router.get('/agent-id', (req, res, next) => {
 
 
 /**
- * @description
- *
- * GET /agent-performance-by-customer-feedback
- *
- * Fetches customer feedback data for agents
- *
- * Example:
- * fetch('/agent-performance-by-customer-feedback')
- *  .then(response => response.json())
- *  .then(data => console.log(data));
- */
-// Bernice updated the following line
-//router.get('/agent-performance-by-customer-feedback/:agentId', (req, res, next) => {
-router.get('/agent-id/:agentId', (req, res, next) => {
-  try {
-    const { agentId } = req.params;
-    console.log('AgentId: ', agentId);
-
-    mongo(async db => {
-      const data = await db.collection('agentPerformance').aggregate([
-        {
-          $match: {
-            'agentId': parseInt(agentId)
-          }
-        },
-        {
-          $lookup: {
-            from: 'agents',
-            localField: 'agentId',
-            foreignField: 'agentId',
-            as: 'agentDetails'
-          }
-        },
-        {
-          $unwind: '$agentDetails'
-        },
-        {
-          $group: {
-            _id: '$agentId',
-            agentName: '$agentDetails.agent',
-            feedbackScores:{ $push:'$customerFeedback'}
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            agentName: '$agentName',
-            feedbackScores: '$feedbackScores'
-          }
-        },
-      ]).toArray();
-      console.log('Feedback data:', data);
-      res.send(data);
-    }, next);
-  } catch (err) {
-    console.error('Error in /agent-performance-by-customer-feedback', err);
-    next(err);
-  }
-});
-
-/**
  * Author: Diana Ruiz Garcia
  * Date: 11/09/24
  * File: agent-performance-by-supervisor.js

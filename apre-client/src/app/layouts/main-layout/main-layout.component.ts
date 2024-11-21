@@ -320,7 +320,6 @@ export class MainLayoutComponent {
   agentPerformanceReports = [
     { name: 'Call Duration by Date Range', url: '/reports/agent-performance/call-duration-by-date-range' },
     { name: 'Call Duration by Month', url: '/reports/agent-performance/call-duration-by-month' },
-    { name: 'Agent Performance by Customer Feedback', url: '/reports/agent-performance/agent-performance-by-customer-feedback'},
     { name: 'Agent Performance by Supervisor', url: '/reports/agent-performance/agent-performance-by-supervisor' },
     { name: 'Performance by Metric', url: '/reports/agent-performance/performance-by-metric' },
     { name: 'Performance by Region', url: '/reports/agent-performance/agent-performance-by-region' },

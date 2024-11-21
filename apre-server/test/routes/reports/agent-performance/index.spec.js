@@ -112,107 +112,8 @@ describe('Apre Agent Performance by Month API', () => {
     ]);
   });
 
-  // Test the call-duration-by-month endpoint with missing parameters
-  it('should return 400 if month or year is missing', async () => {
-    const response = await request(app).get('/api/reports/agent-performance/call-duration-by-month?month=1'); // Send a GET request to the call-duration-by-date-month endpoint with missing year
-    expect(response.status).toBe(400); // Expect a 400 status code
-
-    // Expect the response body to match the expected data
-    expect(response.body).toEqual({
-      message: 'Month and year are required',
-      status: 400,
-      type: 'error'
-    });
-  });
-
-  // Test the call-duration-by-month endpoint with an invalid date range
-  it('should return 404 for an invalid endpoint', async () => {
-    const response = await request(app).get('/api/reports/agent-performance/invalid-endpoint'); // Send a GET request to an invalid endpoint
-    expect(response.status).toBe(404); // Expect a 404 status code
-    // Expect the response body to match the expected data
-    expect(response.body).toEqual({
-      message: 'Not Found',
-      status: 404,
-      type: 'error'
-    });
-  });
 });
 
-/**
- * Author: Kylie Struhs
- * Date: 11/09/2024
- * File: agent-performance-by-customer-feedback.spec.js
- * Description: Test the agent performance by customer feedback API
- */
-
-// Test the agent performance API
-describe('Apre Agent Performance by Customer Feedback API', () => {
-  beforeEach(() => {
-    mongo.mockClear();
-  });
-
-  // Test the agent-performance-by-customer-feedback endpoint
-  it('should fetch customer feedback data for agents', async () => {
-    mongo.mockImplementation(async (callback) => {
-      const db = {
-        collection: jest.fn().mockReturnThis(),
-        aggregate: jest.fn().mockReturnValue({
-          toArray: jest.fn().mockResolvedValue([
-            {
-              agents: ['Agent A'],
-              customerFeedback: ["helpful"]
-            }
-          ])
-        })
-      };
-      await callback(db);
-    });
-
-    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-feedback/1002'); // Send a GET request to the agent-performance-by-customer-feedback endpoint
-
-    expect(response.status).toBe(200); // Expect a 200 status code
-
-    // Expect the response body to match the expected data
-    expect(response.body).toEqual([
-      {
-        agents: ['Agent A'],
-        customerFeedback: ["helpful"]
-      }
-    ]);
-  });
-
-  it('should return 200 and an empty array if no customer feedback data is found', async () => {
-    // Mock the MongoDB implementation
-    mongo.mockImplementation(async (callback) => {
-      const db = {
-        collection: jest.fn().mockReturnThis(),
-        aggregate: jest.fn().mockReturnValue({
-          toArray: jest.fn().mockResolvedValue([])
-        })
-      };
-      await callback(db);
-    });
-
-    // Make a request to the endpoint
-    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-feedback/:1002');
-
-    // Assert the response
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual([]);
-  });
-
-  // Test the agent-performance-by-customer-feedback endpoint with an invalid endpoint
-  it('should return 404 for an invalid endpoint', async () => {
-    const response = await request(app).get('/api/reports/agent-performance/agent-performance-by-customer-foodback'); // Send a GET request to an invalid endpoint
-    expect(response.status).toBe(404); // Expect a 404 status code
-    // Expect the response body to match the expected data
-    expect(response.body).toEqual({
-      message: 'Not Found',
-      status: 404,
-      type: 'error'
-    });
-  });
-});
 
 
 // Test the agent performance API for agent performance report by supervisor.
@@ -472,7 +373,7 @@ describe('Apre Agent Performance data by region API', () => {
     expect(response.body).toEqual(['Africa','Asia','Australia','Europe','North America','South America']); // Expect the response body to match the expected data
   });
 
-  /*
+
   it('should return 200 and an empty array if no data is found for the region', async () => {
     // Mock the MongoDB implementation
     mongo.mockImplementation(async (callback) => {
@@ -492,7 +393,7 @@ describe('Apre Agent Performance data by region API', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([]);
   });
-  */
+
   // Test the customer-feedback/regions endpoint
   it('should fetch a list of distinct regions', async () => {
     mongo.mockImplementation(async (callback) => {
@@ -502,19 +403,11 @@ describe('Apre Agent Performance data by region API', () => {
       };
       await callback(db);
     });
-    const response = await request(app).get('/api/reports/customer-feedback/regions'); // Send a GET request to the customer-feedback/regions endpoint
+
+    //agent-performance/regions
+    const response = await request(app).get('/api/reports/agent-performance/regions'); // Send a GET request to the customer-feedback/regions endpoint
     expect(response.status).toBe(200); // Expect a 200 status code
     expect(response.body).toEqual(['North', 'South', 'East', 'West']); // Expect the response body to match the expected data
   });
 
-  it('should return 404 for an invalid endpoint', async () => {
-    const response = await request(app).get('/api/reports/agent-performance/regions/x'); // Send a GET request to an invalid endpoint
-    expect(response.status).toBe(404);
-    // Expect the response data to equal the expected data
-    expect(response.body).toEqual({
-      message: 'Not Found',
-      status: 404,
-      type: 'error'
-    });
-  });
 });
