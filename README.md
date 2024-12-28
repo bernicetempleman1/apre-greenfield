@@ -7,11 +7,11 @@ Instructor: Professor Richard Krasso
 
 Contributors:
 
-Bernice Templeman
-Nadia Gainer
-Leah Harris
-Diana Ruiz Garcia
-Meher Salim
-Brandon Salvemini
-Sheldon Skaggs
-Kylie Struhs
+* Bernice Templeman
+* Nadia Gainer
+* Leah Harris
+* Diana Ruiz Garcia
+* Meher Salim
+* Brandon Salvemini
+* Sheldon Skaggs
+* Kylie Struhs
