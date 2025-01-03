@@ -2,6 +2,8 @@
  * Title: config.js
  * Author: Professor Krasso
  * Date: 8/4/23
+ *
+ *   dbUrl: `mongodb+srv://${db.username}:${db.password}@cluster0.lujih.mongodb.net/${db.name}?retryWrites=true&w=majority`,
  */
 
 'use strict'
@@ -16,7 +18,7 @@ const db = {
 // Declare the config object
 const config = {
   port: 3000, // This is the default port for MongoDB
-  dbUrl: `mongodb+srv://${db.username}:${db.password}@cluster0.lujih.mongodb.net/${db.name}?retryWrites=true&w=majority`,
+  dbUrl: `mongodb+srv://${db.username}:${db.password}@bellevueuniversity.lftytpq.mongodb.net/${db.name}?retryWrites=true&w=majority`,
   dbname: db.name // This is the name of the database in MongoDB
 }
 
