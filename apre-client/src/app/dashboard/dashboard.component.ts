@@ -19,18 +19,38 @@ import { ChartComponent } from '../shared/chart/chart.component';
     <div class="dashboard">
       <div class="charts-container">
         <div class="card">
-          <app-chart [type]="'bar'" [label]="'Sales Data'" [data]="salesData" [labels]="salesRegions"></app-chart>
+          <app-chart
+            [type]="'bar'"
+            [label]="'Sales Data'"
+            [data]="salesData"
+            [labels]="salesRegions"
+          ></app-chart>
         </div>
         <div class="card">
-          <app-chart [type]="'line'" [label]="'Agent Performance'" [data]="agentPerformanceData" [labels]="agentNames"></app-chart>
+          <app-chart
+            [type]="'line'"
+            [label]="'Agent Performance'"
+            [data]="agentPerformanceData"
+            [labels]="agentNames"
+          ></app-chart>
         </div>
       </div>
       <div class="charts-container">
         <div class="card">
-          <app-chart [type]="'pie'" [label]="'Customer Feedback'" [data]="customerFeedbackData" [labels]="feedbackTypes"></app-chart>
+          <app-chart
+            [type]="'pie'"
+            [label]="'Customer Feedback'"
+            [data]="customerFeedbackData"
+            [labels]="feedbackTypes"
+          ></app-chart>
         </div>
         <div class="card">
-          <app-chart [type]="'doughnut'" [label]="'Report Types'" [data]="reportCounts" [labels]="reportTypes"></app-chart>
+          <app-chart
+            [type]="'doughnut'"
+            [label]="'Report Types'"
+            [data]="reportCounts"
+            [labels]="reportTypes"
+          ></app-chart>
         </div>
       </div>
       <div class="dashboard__table-container">
@@ -44,11 +64,11 @@ import { ChartComponent } from '../shared/chart/chart.component';
           </thead>
           <tbody>
             @for (data of tableData; track data) {
-              <tr>
-                <td>{{ data.agent }}</td>
-                <td>{{ data.callDuration }}</td>
-                <td>{{ data.customerFeedback }}</td>
-              </tr>
+            <tr>
+              <td>{{ data.agent }}</td>
+              <td>{{ data.callDuration }}</td>
+              <td>{{ data.customerFeedback }}</td>
+            </tr>
             }
           </tbody>
         </table>
@@ -102,7 +122,7 @@ import { ChartComponent } from '../shared/chart/chart.component';
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
-  `
+  `,
 })
 export class DashboardComponent implements OnInit {
   tableData: any[] = [];
@@ -117,8 +137,7 @@ export class DashboardComponent implements OnInit {
   reportCounts: number[] = [];
   reportTypes: string[] = [];
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.loadReports();
@@ -137,44 +156,56 @@ export class DashboardComponent implements OnInit {
       next: (data: any) => {
         this.salesData = data.map((d: any) => d.totalAmount);
         this.salesRegions = data.map((d: any) => d.region);
-      }
+      },
     });
   }
 
   loadAgentPerformanceData() {
-    this.http.get(`${environment.apiBaseUrl}/dashboard/agent-performance`).subscribe({
-      next: (data: any) => {
-        this.agentPerformanceData = data.map((d: any) => d.averagePerformance);
-        this.agentNames = data.map((d: any) => d.name);
-      }
-    });
+    this.http
+      .get(`${environment.apiBaseUrl}/dashboard/agent-performance`)
+      .subscribe({
+        next: (data: any) => {
+          this.agentPerformanceData = data.map(
+            (d: any) => d.averagePerformance
+          );
+          this.agentNames = data.map((d: any) => d.name);
+        },
+      });
   }
 
   loadCustomerFeedbackData() {
-    this.http.get(`${environment.apiBaseUrl}/dashboard/customer-feedback`).subscribe({
-      next: (data: any) => {
-        this.feedbackTypes = data.map((d: any) => d.feedbackType);
-        this.customerFeedbackData = data.map((d: any) => d.averagePerformance);
-      }
-    });
+    this.http
+      .get(`${environment.apiBaseUrl}/dashboard/customer-feedback`)
+      .subscribe({
+        next: (data: any) => {
+          this.feedbackTypes = data.map((d: any) => d.feedbackType);
+          this.customerFeedbackData = data.map(
+            (d: any) => d.averagePerformance
+          );
+        },
+      });
   }
 
   loadReportTypesData() {
-    this.http.get(`${environment.apiBaseUrl}/dashboard/report-types`).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.reportTypes = data.reportTypes;
-        this.reportCounts = data.reportCounts;
-      }
-    });
+    this.http
+      .get(`${environment.apiBaseUrl}/dashboard/report-types`)
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.reportTypes = data.reportTypes;
+          this.reportCounts = data.reportCounts;
+        },
+      });
   }
 
   loadAgentFeedbackData() {
-    this.http.get(`${environment.apiBaseUrl}/dashboard/agent-feedback`).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.tableData = data;
-      }
-    });
+    this.http
+      .get(`${environment.apiBaseUrl}/dashboard/agent-feedback`)
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.tableData = data;
+        },
+      });
   }
 }

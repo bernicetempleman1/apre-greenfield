@@ -2,14 +2,6 @@
 // use apre
 //load("insertMany.js")
 // Sample data for Project
-
-db.users.drop()
-db.sales.drop()
-db.agents.drop()
-db.customerFeedback.drop()
-db.agentPerformance.drop()
-db.performanceMetrics.drop()
-
 db.users.insertMany( [
   {
     _id: "650c1f1e1c9d440000a1b1c1",
@@ -508,213 +500,124 @@ db.customerFeedback.insertMany( [
 // Sample data for Project
 db.agentPerformance.insertMany( [
   {
-    "_id": "650c1f1e1c9d440000a1b273",
-    "date": "2023-12-15T00:00:00.000Z",
-    "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1023,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 85
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 75
-      }
-    ],
-    "customerFeedback": "Good, but could be better.",
-    "callDuration": 350,
-    "resolutionTime": 130
+    _id: "650c1f1e1c9d440000a1b1d8",
+    agentId: 1007,
+    name: "Olivia Garcia",
+    email: "olivia.garcia@example.com",
+    phone: "555-0107",
+    region: "West",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b254",
-    "date": "2023-05-18T00:00:00.000Z",
-    "region": "Africa",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1004,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 95
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 85
-      }
-    ],
-    "customerFeedback": "Outstanding service!",
-    "callDuration": 200,
-    "resolutionTime": 90
+    _id: "650c1f1e1c9d440000a1b1dd",
+    agentId: 1012,
+    name: "Mia Rodriguez",
+    email: "mia.rodriguez@example.com",
+    phone: "555-0112",
+    region: "North",
+    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    team: "Call Champions",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b261",
-    "date": "2023-12-15T00:00:00.000Z",
-    "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
-    "team": "Call Champions",
-    "agentId": 1011,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 90
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 80
-      }
-    ],
-    "customerFeedback": "Outstanding support!",
-    "callDuration": 250,
-    "resolutionTime": 100
+    _id: "650c1f1e1c9d440000a1b1de",
+    agentId: 1013,
+    name: "Ethan Clark",
+    email: "ethan.clark@example.com",
+    phone: "555-0113",
+    region: "South",
+    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    team: "Call Champions",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b253",
-    "date": "2023-04-05T00:00:00.000Z",
-    "region": "South America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1003,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 80
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 70
-      }
-    ],
-    "customerFeedback": "Good support, but could be faster.",
-    "callDuration": 350,
-    "resolutionTime": 130
+    _id: "650c1f1e1c9d440000a1b1df",
+    agentId: 1014,
+    name: "Ava Lewis",
+    email: "ava.lewis@example.com",
+    phone: "555-0114",
+    region: "East",
+    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    team: "Call Champions",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b250",
-    "date": "2023-01-15T00:00:00.000Z",
-    "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1000,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 85
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 75
-      }
-    ],
-    "customerFeedback": "Very helpful and professional.",
-    "callDuration": 300,
-    "resolutionTime": 120
+    _id: "650c1f1e1c9d440000a1b1d4",
+    agentId: 1003,
+    name: "Emily Davis",
+    email: "emily.davis@example.com",
+    phone: "555-0103",
+    region: "West",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b262",
-    "date": "2023-01-25T00:00:00.000Z",
-    "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
-    "team": "Call Champions",
-    "agentId": 1012,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 75
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 65
-      }
-    ],
-    "customerFeedback": "Average service.",
-    "callDuration": 400,
-    "resolutionTime": 150
+    _id: "650c1f1e1c9d440000a1b1d6",
+    agentId: 1005,
+    name: "Sophia Martinez",
+    email: "sophia.martinez@example.com",
+    phone: "555-0105",
+    region: "South",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b255",
-    "date": "2023-06-22T00:00:00.000Z",
-    "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1005,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 85
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 75
-      }
-    ],
-    "customerFeedback": "Very good, but room for improvement.",
-    "callDuration": 300,
-    "resolutionTime": 120
+    _id: "650c1f1e1c9d440000a1b1d1",
+    agentId: 1000,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "555-0100",
+    region: "North",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b270",
-    "date": "2023-09-15T00:00:00.000Z",
-    "region": "Asia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
-    "team": "TeleSales Titans",
-    "agentId": 1020,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 80
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 70
-      }
-    ],
-    "customerFeedback": "Very good service.",
-    "callDuration": 300,
-    "resolutionTime": 120
+    _id: "650c1f1e1c9d440000a1b1dc",
+    agentId: 1011,
+    name: "Lucas Martinez",
+    email: "lucas.martinez@example.com",
+    phone: "555-0111",
+    region: "West",
+    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    team: "Call Champions",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b265",
-    "date": "2023-04-25T00:00:00.000Z",
-    "region": "South America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
-    "team": "Call Champions",
-    "agentId": 1015,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 80
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 70
-      }
-    ],
-    "customerFeedback": "Very good support.",
-    "callDuration": 300,
-    "resolutionTime": 120
+    _id: "650c1f1e1c9d440000a1b1d7",
+    agentId: 1006,
+    name: "James Brown",
+    email: "james.brown@example.com",
+    phone: "555-0106",
+    region: "East",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
   },
   {
-    "_id": "650c1f1e1c9d440000a1b268",
-    "date": "2023-07-25T00:00:00.000Z",
-    "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
-    "team": "Call Champions",
-    "agentId": 1018,
-    "performanceMetrics": [
-      {
-        "metricType": "Customer Satisfaction",
-        "value": 85
-      },
-      {
-        "metricType": "Sales Conversion",
-        "value": 75
-      }
-    ],
-    "customerFeedback": "Good service, but a bit slow.",
-    "callDuration": 350,
-    "resolutionTime": 130
-  }
+    _id: "650c1f1e1c9d440000a1b1d2",
+    agentId: 1001,
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    phone: "555-0101",
+    region: "South",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
+  },
 ]);
+

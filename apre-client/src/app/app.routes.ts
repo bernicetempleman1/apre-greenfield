@@ -161,11 +161,13 @@ export const routes: Routes = [
         path: 'faq',
         component: FaqComponent,
       },
+      
       {
         path: 'user-management',
         component: UserManagementComponent,
         children: userManagementRoutes,
       },
+
       {
         path: 'reports/sales',
         component: SalesComponent,
@@ -184,8 +186,10 @@ export const routes: Routes = [
     ],
     canActivate: [authGuard],
   },
+
   {
     path: 'signin',
     component: SigninComponent,
   },
+
 ];
