@@ -10,6 +10,170 @@ db.customerFeedback.drop()
 db.agentPerformance.drop()
 db.performanceMetrics.drop()
 
+/*
+  _id: "650c1f1e1c9d440000a1b1d8",
+    agentId: 1007,
+    name: "Olivia Garcia",
+    email: "olivia.garcia@example.com",
+    phone: "555-0107",
+    region: "West",
+    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    team: "TeleSales Titans",
+    createdAt: "2023-10-01T00:00:00.000Z",
+    updatedAt: "2023-10-01T00:00:00.000Z",
+*/
+
+// Create the houses and students collections using Document Validation.
+db.createCollection("agents", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      properties: {
+        agentId: {
+          bsonType: "int",
+        },
+        createdAt: {
+          bsonType: "date",
+        },
+        updatedAt: {
+          bsonType: "date",
+        },
+        email: {
+          bsonType: "string",
+        },
+        name: {
+          bsonType: "string",
+        },
+        phone: {
+          bsonType: "string",
+        },
+        team: {
+          bsonType: "string",
+        },
+      },
+    },
+  },
+});
+
+/*
+ _id: "650c1f1e1c9d440000a1b1eb",
+    date: "2023-10-11T00:00:00.000Z",
+    region: "East",
+    product: "Fitness Tracker",
+    category: "Wearables",
+    customer: "Lambda LLC",
+    salesperson: "Matthew Harris",
+    channel: "Online",
+    amount: 100,
+*/
+
+// Create the houses and students collections using Document Validation.
+db.createCollection("sales", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      properties: {
+        date: {
+          bsonType: "date",
+        },
+        region: {
+          bsonType: "string",
+        },
+        product: {
+          bsonType: "string",
+        },
+        category: {
+          bsonType: "string",
+        },
+        customer: {
+          bsonType: "string",
+        },
+        salesperson: {
+          bsonType: "string",
+        },
+        channel: {
+          bsonType: "string",
+        },
+        amount: {
+          bsonType: "int",
+        },
+      },
+    },
+  },
+});
+
+
+
+/*
+   "_id": "650c1f1e1c9d440000a1b273",
+    "date": "2023-12-15T00:00:00.000Z",
+    "region": "Australia",
+    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "team": "TeleSales Titans",
+    "agentId": 1023,
+    "performanceMetrics": [
+      {
+        "metricType": "Customer Satisfaction",
+        "value": 85
+      },
+      {
+        "metricType": "Sales Conversion",
+        "value": 75
+      }
+    ],
+    "customerFeedback": "Good, but could be better.",
+    "callDuration": 350,
+    "resolutionTime": 130
+  },
+
+*/
+
+db.createCollection("agentPerformance", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      properties: {
+        agentId: {
+          bsonType: "int",
+        },
+        team: {
+          bsonType: "string",
+        },
+        region: {
+          bsonType: "string",
+        },
+        supervisorId: {
+          bsonType: "objectId",
+        },
+        callDuration: {
+          bsonType: "int",
+        },
+        resolutionTime: {
+          bsonType: "int",
+        },
+        customerFeedback: {
+          bsonType: "string",
+        },
+        date: {
+          bsonType: "date",
+        },
+        performanceMetrics: {
+          bsonType: "array",
+          properties: {
+            metricType: {
+              bsonType: "string",
+            },
+            value: {
+              bsonType: "number",
+            },
+          },
+        },
+      },
+    },
+  },
+});
+
+
 db.users.insertMany( [
   {
     _id: "650c1f1e1c9d440000a1b1c1",
@@ -18,8 +182,8 @@ db.users.insertMany( [
       "$2a$10$Jz7eJdl33V4oXiB0SAcK5efe5ixE4maQg3UkEFJgSLtteI0.CtgDa",
     email: "jsmith@apre.com",
     role: "supervisor",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2024-08-13T19:00:43.388Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2024-08-13T19:00:43.388Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1c2",
@@ -28,8 +192,8 @@ db.users.insertMany( [
       "$2a$10$rClNsKCQd4GxIQsxXLJ.TOEDXZxqnLKLSaKh55dGfrWPqwkue75fG",
     email: "mbrown@apre.com",
     role: "admin",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1c3",
@@ -38,8 +202,8 @@ db.users.insertMany( [
       "$2a$10$gxIHzNqRzubiFFsxK0exGOjaO4Gk7m4XUv/V0T0EWcxr1ThE1lqs2",
     email: "ldavis@apre.com",
     role: "supervisor",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1c4",
@@ -48,8 +212,8 @@ db.users.insertMany( [
       "$2a$10$VmpZCTbjm0CM4Ien.KOT3u9anTZZ.uIqPwbptLtHF8laLAOB5xn/.",
     email: "atyalor@apre.com",
     role: "agent",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2024-11-23T11:53:38.909Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2024-11-23T11:53:38.909Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1c5",
@@ -58,8 +222,8 @@ db.users.insertMany( [
       "$2a$10$wiZPJEjo2TzONl5/SwX1iujoUAIO/DyOdT9jqXGvLqyBXt/h9xc4i",
     email: "namrepus@apre.com",
     role: "admin",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2024-08-09T22:13:40.713Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2024-08-09T22:13:40.713Z"),
   },
 ]);
 
@@ -67,7 +231,7 @@ db.users.insertMany( [
 db.sales.insertMany( [
   {
     _id: "650c1f1e1c9d440000a1b1eb",
-    date: "2023-10-11T00:00:00.000Z",
+    date: new Date("2023-10-11T00:00:00.000Z"),
     region: "East",
     product: "Fitness Tracker",
     category: "Wearables",
@@ -78,7 +242,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1f6",
-    date: "2023-10-22T00:00:00.000Z",
+    date: new Date("2023-10-22T00:00:00.000Z"),
     region: "South",
     product: "Portable Projector",
     category: "Electronics",
@@ -89,7 +253,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1e3",
-    date: "2023-10-03T00:00:00.000Z",
+    date: new Date("2023-10-03T00:00:00.000Z"),
     region: "East",
     product: "Office Chair Deluxe",
     category: "Furniture",
@@ -100,7 +264,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1e1",
-    date: "2023-10-01T00:00:00.000Z",
+    date: new Date("2023-10-01T00:00:00.000Z"),
     region: "North",
     product: "Laptop Pro 15",
     category: "Electronics",
@@ -111,7 +275,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1ec",
-    date: "2023-10-12T00:00:00.000Z",
+    date: new Date("2023-10-12T00:00:00.000Z"),
     region: "West",
     product: "Digital Camera",
     category: "Electronics",
@@ -122,7 +286,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1e5",
-    date: "2023-10-05T00:00:00.000Z",
+    date: new Date("2023-10-05T00:00:00.000Z"),
     region: "North",
     product: "Gaming Console",
     category: "Electronics",
@@ -133,7 +297,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1ed",
-    date: "2023-10-13T00:00:00.000Z",
+    date: new Date("2023-10-13T00:00:00.000Z"),
     region: "North",
     product: "Laptop Pro 13",
     category: "Electronics",
@@ -144,7 +308,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1f3",
-    date: "2023-10-19T00:00:00.000Z",
+    date: new Date("2023-10-19T00:00:00.000Z"),
     region: "East",
     product: "Wireless Charger",
     category: "Accessories",
@@ -155,7 +319,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1e7",
-    date: "2023-10-07T00:00:00.000Z",
+    date: new Date("2023-10-07T00:00:00.000Z"),
     region: "East",
     product: "Smartwatch Series 5",
     category: "Wearables",
@@ -166,7 +330,7 @@ db.sales.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b1e2",
-    date: "2023-10-02T00:00:00.000Z",
+    date: new Date("2023-10-02T00:00:00.000Z"),
     region: "South",
     product: "Smartphone X",
     category: "Electronics",
@@ -186,10 +350,10 @@ db.agents.insertMany( [
     email: "olivia.garcia@example.com",
     phone: "555-0107",
     region: "West",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1dd",
@@ -198,10 +362,10 @@ db.agents.insertMany( [
     email: "mia.rodriguez@example.com",
     phone: "555-0112",
     region: "North",
-    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c4"),
     team: "Call Champions",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1de",
@@ -210,10 +374,10 @@ db.agents.insertMany( [
     email: "ethan.clark@example.com",
     phone: "555-0113",
     region: "South",
-    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c4"),
     team: "Call Champions",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1df",
@@ -222,10 +386,10 @@ db.agents.insertMany( [
     email: "ava.lewis@example.com",
     phone: "555-0114",
     region: "East",
-    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c4"),
     team: "Call Champions",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1d4",
@@ -234,10 +398,10 @@ db.agents.insertMany( [
     email: "emily.davis@example.com",
     phone: "555-0103",
     region: "West",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1d6",
@@ -246,10 +410,10 @@ db.agents.insertMany( [
     email: "sophia.martinez@example.com",
     phone: "555-0105",
     region: "South",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1d1",
@@ -258,10 +422,10 @@ db.agents.insertMany( [
     email: "john.doe@example.com",
     phone: "555-0100",
     region: "North",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1dc",
@@ -270,10 +434,10 @@ db.agents.insertMany( [
     email: "lucas.martinez@example.com",
     phone: "555-0111",
     region: "West",
-    supervisorId: "650c1f1e1c9d440000a1b1c4",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c4"),
     team: "Call Champions",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1d7",
@@ -282,10 +446,10 @@ db.agents.insertMany( [
     email: "james.brown@example.com",
     phone: "555-0106",
     region: "East",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
   {
     _id: "650c1f1e1c9d440000a1b1d2",
@@ -294,10 +458,10 @@ db.agents.insertMany( [
     email: "jane.smith@example.com",
     phone: "555-0101",
     region: "South",
-    supervisorId: "650c1f1e1c9d440000a1b1c3",
+    supervisorId: new ObjectId("650c1f1e1c9d440000a1b1c3"),
     team: "TeleSales Titans",
-    createdAt: "2023-10-01T00:00:00.000Z",
-    updatedAt: "2023-10-01T00:00:00.000Z",
+    createdAt: new Date("2023-10-01T00:00:00.000Z"),
+    updatedAt: new Date("2023-10-01T00:00:00.000Z"),
   },
 ]);
 
@@ -305,7 +469,7 @@ db.agents.insertMany( [
 db.customerFeedback.insertMany( [
   {
     _id: "650c1f1e1c9d440000a1b23a",
-    date: "2023-10-10T00:00:00.000Z",
+    date: new Date("2023-10-10T00:00:00.000Z"),
     region: "Asia",
     product: "Air Conditioner Z",
     category: "Home Appliances",
@@ -325,7 +489,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b23b",
-    date: "2023-11-05T00:00:00.000Z",
+    date: new Date("2023-11-05T00:00:00.000Z"),
     region: "South America",
     product: "Refrigerator Y",
     category: "Home Appliances",
@@ -345,7 +509,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b23e",
-    date: "2023-02-15T00:00:00.000Z",
+    date: new Date("2023-02-15T00:00:00.000Z"),
     region: "North America",
     product: "Gaming Console V",
     category: "Electronics",
@@ -365,7 +529,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b23c",
-    date: "2023-12-15T00:00:00.000Z",
+    date: new Date("2023-12-15T00:00:00.000Z"),
     region: "Africa",
     product: "Washing Machine W",
     category: "Home Appliances",
@@ -385,7 +549,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b239",
-    date: "2023-09-25T00:00:00.000Z",
+    date: new Date("2023-09-25T00:00:00.000Z"),
     region: "Europe",
     product: "Laptop Pro",
     category: "Computers",
@@ -405,7 +569,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b23d",
-    date: "2023-01-25T00:00:00.000Z",
+    date: new Date("2023-01-25T00:00:00.000Z"),
     region: "Australia",
     product: "Smart TV Q",
     category: "Electronics",
@@ -425,7 +589,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b238",
-    date: "2023-08-14T00:00:00.000Z",
+    date: new Date("2023-08-14T00:00:00.000Z"),
     region: "North America",
     product: "Smartphone X",
     category: "Electronics",
@@ -445,7 +609,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b240",
-    date: "2023-04-25T00:00:00.000Z",
+    date: new Date("2023-04-25T00:00:00.000Z"),
     region: "Asia",
     product: "Tablet T",
     category: "Computers",
@@ -465,7 +629,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b241",
-    date: "2023-05-30T00:00:00.000Z",
+    date: new Date("2023-05-30T00:00:00.000Z"),
     region: "South America",
     product: "Headphones H",
     category: "Audio",
@@ -485,7 +649,7 @@ db.customerFeedback.insertMany( [
   },
   {
     _id: "650c1f1e1c9d440000a1b23f",
-    date: "2023-03-20T00:00:00.000Z",
+    date: new Date("2023-03-20T00:00:00.000Z"),
     region: "Europe",
     product: "Smartwatch S",
     category: "Wearables",
@@ -508,12 +672,12 @@ db.customerFeedback.insertMany( [
 // Sample data for Project
 db.agentPerformance.insertMany( [
   {
-    "_id": "650c1f1e1c9d440000a1b273",
-    "date": "2023-12-15T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b273"),
+    "date": new Date("2023-12-15T00:00:00.000Z"),
     "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1023,
+    "agentId": new Int32(1023),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -529,12 +693,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 130
   },
   {
-    "_id": "650c1f1e1c9d440000a1b254",
-    "date": "2023-05-18T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b254"),
+    "date": new Date("2023-05-18T00:00:00.000Z"),
     "region": "Africa",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1004,
+    "agentId": new Int32(1004),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -550,12 +714,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 90
   },
   {
-    "_id": "650c1f1e1c9d440000a1b261",
-    "date": "2023-12-15T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b261"),
+    "date": new Date("2023-12-15T00:00:00.000Z"),
     "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c4"),
     "team": "Call Champions",
-    "agentId": 1011,
+    "agentId": new Int32(1011),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -571,12 +735,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 100
   },
   {
-    "_id": "650c1f1e1c9d440000a1b253",
-    "date": "2023-04-05T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b253"),
+    "date": new Date("2023-04-05T00:00:00.000Z"),
     "region": "South America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1003,
+    "agentId": new Int32(1003),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -592,12 +756,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 130
   },
   {
-    "_id": "650c1f1e1c9d440000a1b250",
-    "date": "2023-01-15T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b250"),
+    "date": new Date("2023-01-15T00:00:00.000Z"),
     "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1000,
+    "agentId": new Int32(1000),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -613,12 +777,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 120
   },
   {
-    "_id": "650c1f1e1c9d440000a1b262",
-    "date": "2023-01-25T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b262"),
+    "date": new Date("2023-01-25T00:00:00.000Z"),
     "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c4"),
     "team": "Call Champions",
-    "agentId": 1012,
+    "agentId": new Int32(1012),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -634,12 +798,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 150
   },
   {
-    "_id": "650c1f1e1c9d440000a1b255",
-    "date": "2023-06-22T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b255"),
+    "date": new Date("2023-06-22T00:00:00.000Z"),
     "region": "Australia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1005,
+    "agentId": new Int32(1005),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -655,12 +819,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 120
   },
   {
-    "_id": "650c1f1e1c9d440000a1b270",
-    "date": "2023-09-15T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b270"),
+    "date": new Date("2023-09-15T00:00:00.000Z"),
     "region": "Asia",
-    "supervisorId": "650c1f1e1c9d440000a1b1c3",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c3"),
     "team": "TeleSales Titans",
-    "agentId": 1020,
+    "agentId": new Int32(1020),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -676,12 +840,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 120
   },
   {
-    "_id": "650c1f1e1c9d440000a1b265",
-    "date": "2023-04-25T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b265"),
+    "date": new Date("2023-04-25T00:00:00.000Z"),
     "region": "South America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c4"),
     "team": "Call Champions",
-    "agentId": 1015,
+    "agentId": new Int32(1015),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
@@ -697,12 +861,12 @@ db.agentPerformance.insertMany( [
     "resolutionTime": 120
   },
   {
-    "_id": "650c1f1e1c9d440000a1b268",
-    "date": "2023-07-25T00:00:00.000Z",
+    "_id": new ObjectId("650c1f1e1c9d440000a1b268"),
+    "date": new Date("2023-07-25T00:00:00.000Z"),
     "region": "North America",
-    "supervisorId": "650c1f1e1c9d440000a1b1c4",
+    "supervisorId": new ObjectId("650c1f1e1c9d440000a1b1c4"),
     "team": "Call Champions",
-    "agentId": 1018,
+    "agentId":new Int32(1018),
     "performanceMetrics": [
       {
         "metricType": "Customer Satisfaction",
